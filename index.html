@@ -4,6 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IT Migration Hub | Bethel Farms</title>
+    
+    <!-- 
+    ╔════════════════════════════════════════════════════════════════════════════╗
+    ║                        EASY CONFIG SECTION                                  ║
+    ║         Edit the values below to update the portal - that's it!            ║
+    ╚════════════════════════════════════════════════════════════════════════════╝
+    -->
+    <script>
+        const CONFIG = {
+            // ─────────────────────────────────────────────────────────────
+            // STATUS BANNER (the yellow bar at the top)
+            // ─────────────────────────────────────────────────────────────
+            statusBadge: "Migration In Progress",      // e.g., "Migration In Progress", "Migration Complete", "Maintenance"
+            statusMessage: "Email & OneDrive are working normally — data transfer is ongoing.",
+            lastUpdated: "January 21, 2026 at 2:00 PM",
+            
+            // ─────────────────────────────────────────────────────────────
+            // SYSTEM STATUS CARDS (on the Status tab)
+            // Options: "good", "warning", "info", "error"
+            // ─────────────────────────────────────────────────────────────
+            systems: {
+                email: {
+                    status: "good",           // good = green, warning = yellow, info = blue, error = red
+                    label: "Fully operational"
+                },
+                onedrive: {
+                    status: "good",
+                    label: "Fully operational data transferring"
+                },
+                dataTransfer: {
+                    status: "warning",
+                    label: "~30% complete"
+                },
+                laptops: {
+                    status: "info",
+                    label: "Scheduling migrations"
+                }
+            },
+            
+            // ─────────────────────────────────────────────────────────────
+            // TIMELINE PHASES
+            // status options: "done", "current", "upcoming"
+            // ─────────────────────────────────────────────────────────────
+            timeline: {
+                phase1_email: { status: "done", text: "Completed — All email accounts migrated" },
+                phase2_files: { status: "current", text: "In progress — Files transferring (~40% complete)" },
+                phase3_devices: { status: "current", text: "In progress — Contact IT to schedule laptop migration" },
+                phase4_cleanup: { status: "upcoming", text: "Upcoming — Final verification and old system shutdown" }
+            },
+            
+            // ─────────────────────────────────────────────────────────────
+            // SUPPORT EMAIL
+            // ─────────────────────────────────────────────────────────────
+            supportEmail: "amcclone@harmonybrands.com"
+        };
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -704,12 +760,12 @@
         <div class="status-content">
             <div class="status-badge">
                 <span class="pulse"></span>
-                Migration In Progress
+                <span id="cfg-statusBadge">Migration In Progress</span>
             </div>
             <div class="status-text">
-                <strong>Email &amp; OneDrive are working normally</strong> — data transfer to the new system is ongoing and will complete soon.
+                <strong id="cfg-statusMessage">Email &amp; OneDrive are working normally</strong>
             </div>
-            <div class="status-date">Updated: January 22, 2026</div>
+            <div class="status-date">Updated: <span id="cfg-lastUpdated">January 22, 2026</span></div>
         </div>
     </div>
 
@@ -758,25 +814,25 @@
                 <p>Real-time overview of the migration progress</p>
 
                 <div class="status-grid">
-                    <div class="status-card good">
+                    <div class="status-card" id="cfg-card-email">
                         <div class="status-icon">✉️</div>
                         <h3>Email</h3>
-                        <p>Fully operational</p>
+                        <p id="cfg-email-label">Fully operational</p>
                     </div>
-                    <div class="status-card good">
+                    <div class="status-card" id="cfg-card-onedrive">
                         <div class="status-icon">📁</div>
                         <h3>OneDrive</h3>
-                        <p>Fully operational</p>
+                        <p id="cfg-onedrive-label">Fully operational</p>
                     </div>
-                    <div class="status-card warning">
+                    <div class="status-card" id="cfg-card-transfer">
                         <div class="status-icon">🔄</div>
                         <h3>Data Transfer</h3>
-                        <p>In progress</p>
+                        <p id="cfg-transfer-label">In progress</p>
                     </div>
-                    <div class="status-card info">
+                    <div class="status-card" id="cfg-card-laptops">
                         <div class="status-icon">💻</div>
                         <h3>Laptops</h3>
-                        <p>Scheduling migrations</p>
+                        <p id="cfg-laptops-label">Scheduling migrations</p>
                     </div>
                 </div>
             </div>
@@ -813,31 +869,31 @@
             <div class="card">
                 <h2>Migration Timeline</h2>
                 <div class="step">
-                    <div class="step-number">✓</div>
+                    <div class="step-number" id="cfg-timeline1-icon">✓</div>
                     <div class="step-content">
                         <h3>Phase 1: Email Migration</h3>
-                        <p>Completed — All email accounts have been migrated to the Bethel Farms system.</p>
+                        <p id="cfg-timeline1-text">Completed — All email accounts have been migrated to the Bethel Farms system.</p>
                     </div>
                 </div>
                 <div class="step">
-                    <div class="step-number">◐</div>
+                    <div class="step-number" id="cfg-timeline2-icon">◐</div>
                     <div class="step-content">
                         <h3>Phase 2: OneDrive &amp; Files</h3>
-                        <p>In progress — Files are being transferred. This process runs in the background and doesn't affect your access.</p>
+                        <p id="cfg-timeline2-text">In progress — Files are being transferred.</p>
                     </div>
                 </div>
                 <div class="step">
-                    <div class="step-number">3</div>
+                    <div class="step-number" id="cfg-timeline3-icon">3</div>
                     <div class="step-content">
                         <h3>Phase 3: Device Migration</h3>
-                        <p>Current — Laptops and mobile devices are being connected to the new system. Contact IT to schedule your laptop migration.</p>
+                        <p id="cfg-timeline3-text">Current — Laptops and mobile devices are being connected to the new system.</p>
                     </div>
                 </div>
                 <div class="step">
-                    <div class="step-number">4</div>
+                    <div class="step-number" id="cfg-timeline4-icon">4</div>
                     <div class="step-content">
                         <h3>Phase 4: Cleanup</h3>
-                        <p>Upcoming — Final verification and decommissioning of the old Harmony Brands system.</p>
+                        <p id="cfg-timeline4-text">Upcoming — Final verification and decommissioning of the old Harmony Brands system.</p>
                     </div>
                 </div>
             </div>
@@ -1175,7 +1231,7 @@
                 <h2>Request IT Support</h2>
                 <p>Fill out this form and we'll get back to you as soon as possible</p>
 
-                <form id="supportForm" action="https://formsubmit.co/amcclone@harmonybrands.com" method="POST">
+                <form id="supportForm" action="https://formsubmit.co/amcclone@harmonybrands.com" method="POST" data-email-config="true">
                     <!-- FormSubmit configuration -->
                     <input type="hidden" name="_subject" value="IT Support Request - Migration Hub">
                     <input type="hidden" name="_template" value="table">
@@ -1409,6 +1465,70 @@
             btn.innerHTML = '<span>Sending...</span>';
             btn.disabled = true;
         });
+
+        // ═══════════════════════════════════════════════════════════════
+        // APPLY CONFIG VALUES - Don't edit below this line
+        // ═══════════════════════════════════════════════════════════════
+        function applyConfig() {
+            // Status banner
+            document.getElementById('cfg-statusBadge').textContent = CONFIG.statusBadge;
+            document.getElementById('cfg-statusMessage').textContent = CONFIG.statusMessage;
+            document.getElementById('cfg-lastUpdated').textContent = CONFIG.lastUpdated;
+            
+            // Status cards
+            const cardMap = {
+                'email': 'cfg-card-email',
+                'onedrive': 'cfg-card-onedrive', 
+                'dataTransfer': 'cfg-card-transfer',
+                'laptops': 'cfg-card-laptops'
+            };
+            const labelMap = {
+                'email': 'cfg-email-label',
+                'onedrive': 'cfg-onedrive-label',
+                'dataTransfer': 'cfg-transfer-label',
+                'laptops': 'cfg-laptops-label'
+            };
+            
+            for (const [key, cardId] of Object.entries(cardMap)) {
+                const card = document.getElementById(cardId);
+                const label = document.getElementById(labelMap[key]);
+                if (card && CONFIG.systems[key]) {
+                    card.className = 'status-card ' + CONFIG.systems[key].status;
+                    if (label) label.textContent = CONFIG.systems[key].label;
+                }
+            }
+            
+            // Timeline
+            const timelineIcons = {
+                'done': '✓',
+                'current': '◐',
+                'upcoming': ''
+            };
+            
+            const phases = ['phase1_email', 'phase2_files', 'phase3_devices', 'phase4_cleanup'];
+            phases.forEach((phase, index) => {
+                const iconEl = document.getElementById(`cfg-timeline${index + 1}-icon`);
+                const textEl = document.getElementById(`cfg-timeline${index + 1}-text`);
+                if (iconEl && CONFIG.timeline[phase]) {
+                    const status = CONFIG.timeline[phase].status;
+                    iconEl.textContent = timelineIcons[status] || (index + 1).toString();
+                    iconEl.style.background = status === 'done' ? '#10b981' : 
+                                               status === 'current' ? '#f59e0b' : '#9ca3af';
+                }
+                if (textEl && CONFIG.timeline[phase]) {
+                    textEl.textContent = CONFIG.timeline[phase].text;
+                }
+            });
+            
+            // Support email in form
+            const form = document.getElementById('supportForm');
+            if (form && CONFIG.supportEmail) {
+                form.action = 'https://formsubmit.co/' + CONFIG.supportEmail;
+            }
+        }
+        
+        // Run on page load
+        applyConfig();
     </script>
 </body>
 </html>
