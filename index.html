@@ -17,8 +17,8 @@
             // STATUS BANNER (the yellow bar at the top)
             // ─────────────────────────────────────────────────────────────
             statusBadge: "Migration In Progress",      // e.g., "Migration In Progress", "Migration Complete", "Maintenance"
-            statusMessage: "Email & OneDrive are working normally — data transfer is ongoing.",
-            lastUpdated: "January 21, 2026 at 2:00 PM",
+            statusMessage: "Email & OneDrive are working normally — data transfer ongoing.",
+            lastUpdated: "January 22, 2026 at 5:30 PM",
             
             // ─────────────────────────────────────────────────────────────
             // SYSTEM STATUS CARDS (on the Status tab)
@@ -31,7 +31,7 @@
                 },
                 onedrive: {
                     status: "good",
-                    label: "Fully operational data transferring"
+                    label: "Fully operational"
                 },
                 dataTransfer: {
                     status: "warning",
@@ -49,7 +49,7 @@
             // ─────────────────────────────────────────────────────────────
             timeline: {
                 phase1_email: { status: "done", text: "Completed — All email accounts migrated" },
-                phase2_files: { status: "current", text: "In progress — Files transferring (~40% complete)" },
+                phase2_files: { status: "current", text: "In progress — Files transferring (~30% complete)" },
                 phase3_devices: { status: "current", text: "In progress — Contact IT to schedule laptop migration" },
                 phase4_cleanup: { status: "upcoming", text: "Upcoming — Final verification and old system shutdown" }
             },
@@ -737,6 +737,61 @@
             font-size: 0.85rem;
         }
 
+        /* App Choice Buttons */
+        .app-choice {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .app-btn {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1.25rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            background: var(--card-bg);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .app-btn:hover {
+            border-color: var(--primary);
+        }
+
+        .app-btn.active {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        }
+
+        .app-icon {
+            font-size: 2rem;
+        }
+
+        .app-name {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text);
+        }
+
+        .app-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .app-instructions {
+            display: none;
+        }
+
+        .app-instructions.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
         /* Responsive */
         @media (max-width: 600px) {
             .header { padding: 1.5rem 1rem; }
@@ -908,78 +963,162 @@
                     <line x1="12" y1="17" x2="12.01" y2="17"></line>
                 </svg>
                 <div>
-                    <strong>Watch for the old system!</strong> If you see the purple "Harmony" logo or "harmonybrands1.onmicrosoft.com" during sign-in, stop and contact IT.
+                    <strong>Watch for the old system!</strong> If you see "Harmony" logo or "harmonybrands1" during sign-in, stop and contact IT.
                 </div>
             </div>
 
             <div class="card">
-                <h2>Step 1: Remove Old Profiles</h2>
-                <p>Clear any existing work profiles from your iPhone or iPad</p>
-
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h3>Open Settings → General → VPN &amp; Device Management</h3>
-                        <p>If you see any profile mentioning "Harmony" or your work email, tap it and select <strong>Remove Management</strong>.</p>
-                    </div>
+                <h2>Which email app do you use?</h2>
+                <p>Choose your setup guide based on how you access email on your iPhone or iPad.</p>
+                
+                <div class="app-choice">
+                    <button class="app-btn active" data-target="iphone-outlook">
+                        <span class="app-icon">📧</span>
+                        <span class="app-name">Outlook App</span>
+                        <span class="app-desc">Blue Outlook icon</span>
+                    </button>
+                    <button class="app-btn" data-target="iphone-native">
+                        <span class="app-icon">✉️</span>
+                        <span class="app-name">Apple Mail</span>
+                        <span class="app-desc">Built-in Mail app</span>
+                    </button>
                 </div>
+            </div>
 
-                <div class="phone-mockup">
-                    <div class="phone-screen">
-                        <div class="phone-notch"></div>
-                        <div class="phone-status-bar">
-                            <span>9:41</span>
-                            <span>📶 100%</span>
+            <!-- OUTLOOK APP INSTRUCTIONS -->
+            <div id="iphone-outlook" class="app-instructions active">
+                <div class="card">
+                    <h2>📧 Outlook App — Quick Fix</h2>
+                    <p>Follow these steps if you use the Microsoft Outlook app.</p>
+
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Remove Old Account from Outlook</h3>
+                            <ul>
+                                <li>Open <strong>Outlook</strong></li>
+                                <li>Tap your <strong>profile icon</strong> (top left)</li>
+                                <li>Tap the <strong>gear icon</strong> ⚙️ (Settings)</li>
+                                <li>Tap the old <strong>Harmonybrands1</strong> account</li>
+                                <li>Tap <strong>Delete Account</strong></li>
+                            </ul>
                         </div>
-                        <div class="phone-content">
-                            <div class="phone-nav-back">‹ General</div>
-                            <div class="phone-header">VPN &amp; Device Management</div>
-                            <div class="phone-profile-card">
-                                <div class="phone-profile-icon red">H</div>
-                                <div class="phone-profile-info">
-                                    <div class="phone-profile-name">Harmony Brands MDM</div>
-                                    <div class="phone-profile-detail">Tap to remove →</div>
-                                </div>
-                            </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Remove Old Account from iOS (if present)</h3>
+                            <ul>
+                                <li>Go to <strong>Settings → Mail → Accounts</strong></li>
+                                <li>If you see an old Harmonybrands1 account, tap it and <strong>Delete Account</strong></li>
+                                <li>If it's not there, that's fine — skip to step 3</li>
+                            </ul>
                         </div>
                     </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Add New Account in Outlook</h3>
+                            <ul>
+                                <li>Open <strong>Outlook</strong></li>
+                                <li>Tap <strong>Add Account</strong></li>
+                                <li>Enter your email: <code>yourname@harmonybrands.com</code></li>
+                                <li>Complete sign-in</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>Remove Old Profile (if exists)</h3>
+                            <ul>
+                                <li>Go to <strong>Settings → General → VPN & Device Management</strong></li>
+                                <li>If you see any <strong>Harmonybrands1</strong> profile, remove it</li>
+                                <li><strong>Reboot</strong> your phone if you had to remove a profile</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-success" style="margin-top: 1rem; margin-bottom: 0;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                        <div><strong>Done!</strong> Your email should now sync.</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="card">
-                <h2>Step 2: Sign Out of Microsoft Apps</h2>
-                <p>Remove your account from Outlook, Teams, and Authenticator</p>
+            <!-- NATIVE MAIL APP INSTRUCTIONS -->
+            <div id="iphone-native" class="app-instructions">
+                <div class="card">
+                    <h2>✉️ Apple Mail — 1 Minute Fix</h2>
+                    <p>Follow these steps if you use the built-in Apple Mail app.</p>
 
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h3>Outlook</h3>
-                        <p>Open Outlook → tap profile icon (top left) → tap gear ⚙️ → tap your work email → <strong>Delete Account</strong></p>
+                    <div class="alert alert-info" style="margin-bottom: 1rem;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        <div>iPhones do NOT restore old tenant configs unless an old Mail profile exists. This is usually a quick fix!</div>
                     </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h3>Authenticator &amp; Teams</h3>
-                        <p>If installed, open each app and remove/sign out of your work account.</p>
+
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Remove Old Account</h3>
+                            <ul>
+                                <li>Go to <strong>Settings → Mail → Accounts</strong></li>
+                                <li>Tap the old <strong>Harmonybrands1</strong> account</li>
+                                <li>Tap <strong>Delete Account</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Add New Account</h3>
+                            <ul>
+                                <li>Go to <strong>Settings → Mail → Accounts → Add Account</strong></li>
+                                <li>Tap <strong>Microsoft Exchange</strong></li>
+                                <li>Enter your email: <code>yourname@harmonybrands.com</code></li>
+                                <li>Complete sign-in</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Remove Old Profile (if exists)</h3>
+                            <ul>
+                                <li>Go to <strong>Settings → General → VPN & Device Management</strong></li>
+                                <li>If you see any profile referencing <strong>Harmonybrands1</strong>, delete it</li>
+                                <li><strong>Reboot</strong> your phone</li>
+                                <li>Add the account back if needed</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-success" style="margin-top: 1rem; margin-bottom: 0;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                        <div><strong>Done!</strong> Your email should now sync.</div>
                     </div>
                 </div>
             </div>
 
-            <div class="card">
-                <h2>Step 3: Restart Your Phone</h2>
-                <p>A quick restart clears cached login data</p>
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h3>Power off, wait 30 seconds, power back on</h3>
-                    </div>
-                </div>
-            </div>
-
+            <!-- Wrong vs Correct Sign-in Card -->
             <div class="card" style="border: 2px solid var(--warning);">
-                <h2>⚠️ Important: Verify You're on the Right System</h2>
-                <p>When signing back in, check the organization name carefully</p>
+                <h2>⚠️ Verify You're on the Right System</h2>
+                <p>When signing in, check the organization name carefully</p>
 
                 <div class="mockup-row">
                     <div>
@@ -1034,34 +1173,6 @@
                         </div>
                         <p class="mockup-label" style="color: var(--success);">✓ CORRECT</p>
                     </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <h2>Step 4: Add Your Account</h2>
-                <p>Sign into Outlook with your work email</p>
-
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h3>Open Outlook and Add Account</h3>
-                        <p>Enter your email: <code>yourname@harmonybrands.com</code></p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h3>Complete Sign-In</h3>
-                        <p>Enter your password and approve any MFA prompts. You may be asked to install Authenticator or Company Portal — follow the on-screen instructions.</p>
-                    </div>
-                </div>
-
-                <div class="alert alert-success" style="margin-top: 1rem; margin-bottom: 0;">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                    </svg>
-                    <div><strong>You're all set!</strong> Your email will begin syncing shortly.</div>
                 </div>
             </div>
         </section>
@@ -1075,70 +1186,108 @@
                     <line x1="12" y1="17" x2="12.01" y2="17"></line>
                 </svg>
                 <div>
-                    <strong>Watch for the old system!</strong> If you see the purple "Harmony" logo or "harmonybrands1.onmicrosoft.com" during sign-in, stop and contact IT.
+                    <strong>Watch for the old system!</strong> If you see "Harmony" logo or "harmonybrands1" during sign-in, stop and contact IT.
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                <div>
+                    <strong>Android users:</strong> Use only the Outlook app for work email (not the built-in Gmail/Email app).
                 </div>
             </div>
 
             <div class="card">
-                <h2>Step 1: Remove Old Accounts</h2>
-                <p>Clear any existing work accounts from your Android device</p>
+                <h2>📧 Outlook App — Quick Fix</h2>
+                <p>Follow these steps to reconfigure Outlook on your Android phone.</p>
 
                 <div class="step">
                     <div class="step-number">1</div>
                     <div class="step-content">
-                        <h3>Settings → Accounts</h3>
-                        <p>Look for your work email or "Work profile" entries. Tap on each and select <strong>Remove account</strong>.</p>
+                        <h3>Remove Old Account from Outlook</h3>
+                        <ul>
+                            <li>Open <strong>Outlook</strong></li>
+                            <li>Tap your <strong>profile icon</strong> (top left)</li>
+                            <li>Tap the <strong>gear icon</strong> ⚙️ (Settings)</li>
+                            <li>Tap the old <strong>Harmonybrands1</strong> account</li>
+                            <li>Tap <strong>Delete Account</strong> → Confirm</li>
+                        </ul>
                     </div>
                 </div>
 
-                <div class="phone-mockup">
-                    <div class="phone-screen" style="background: #121212;">
-                        <div class="phone-notch"></div>
-                        <div class="phone-status-bar" style="color: white;">
-                            <span>9:41</span>
-                            <span>📶 100%</span>
-                        </div>
-                        <div class="phone-content">
-                            <div class="phone-nav-back" style="color: #8ab4f8;">← Settings</div>
-                            <div class="phone-header" style="color: white; font-size: 20px;">Accounts</div>
-                            <div class="phone-profile-card" style="background: #2d2d2d;">
-                                <div class="phone-profile-icon red">H</div>
-                                <div class="phone-profile-info">
-                                    <div class="phone-profile-name" style="color: white;">Work Account</div>
-                                    <div class="phone-profile-detail" style="color: #9aa0a6;">Tap to remove →</div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Clear Outlook App Data</h3>
+                        <ul>
+                            <li>Go to <strong>Settings → Apps → Outlook → Storage</strong></li>
+                            <li>Tap <strong>Clear Cache</strong></li>
+                            <li>Tap <strong>Clear Data</strong></li>
+                        </ul>
                     </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Remove Old Account from Device</h3>
+                        <ul>
+                            <li>Go to <strong>Settings → Accounts</strong></li>
+                            <li>Remove <strong>ANY</strong> Harmonybrands1 account entries</li>
+                            <li><strong>Reboot</strong> your phone</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Add New Account in Outlook</h3>
+                        <ul>
+                            <li>Open <strong>Outlook</strong></li>
+                            <li>Tap <strong>Add Account</strong></li>
+                            <li>Enter your email: <code>yourname@harmonybrands.com</code></li>
+                            <li>Enter your password and complete sign-in</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="alert alert-success" style="margin-top: 1rem; margin-bottom: 0;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    <div><strong>Done!</strong> Your email should now sync.</div>
                 </div>
             </div>
 
-            <div class="card">
-                <h2>Step 2: Clear App Data</h2>
-                <p>Reset Microsoft apps to ensure a fresh connection</p>
+            <div class="card" style="border: 2px solid var(--info);">
+                <h2>💡 Optional: Prevent Old Config from Coming Back</h2>
+                <p>If your phone keeps restoring the old account after setup, disable Google backup temporarily:</p>
 
                 <div class="step">
                     <div class="step-number">1</div>
                     <div class="step-content">
-                        <h3>Settings → Apps → Outlook → Storage</h3>
-                        <p>Tap <strong>Clear Cache</strong> and <strong>Clear Data</strong>. Repeat for Authenticator, Teams, and Company Portal if installed.</p>
+                        <h3>Disable Backup Restore</h3>
+                        <ul>
+                            <li>Go to <strong>Settings → System → Backup</strong></li>
+                            <li>Turn <strong>OFF</strong> "Backup by Google One"</li>
+                            <li>Turn <strong>OFF</strong> "Automatic Restore"</li>
+                            <li><strong>Reboot</strong> your phone</li>
+                        </ul>
+                        <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.9rem;">This prevents the old Outlook configuration from being restored. You can turn backup back on after email is working.</p>
                     </div>
                 </div>
             </div>
 
-            <div class="card">
-                <h2>Step 3: Restart Your Phone</h2>
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h3>Hold power button → Restart</h3>
-                    </div>
-                </div>
-            </div>
-
+            <!-- Wrong vs Correct Sign-in Card -->
             <div class="card" style="border: 2px solid var(--warning);">
-                <h2>⚠️ Important: Verify You're on the Right System</h2>
-                <p>When signing back in, check the organization name carefully</p>
+                <h2>⚠️ Verify You're on the Right System</h2>
+                <p>When signing in, check the organization name carefully</p>
 
                 <div class="mockup-row">
                     <div>
@@ -1193,34 +1342,6 @@
                         </div>
                         <p class="mockup-label" style="color: var(--success);">✓ CORRECT</p>
                     </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <h2>Step 4: Add Your Account</h2>
-                <p>Sign into Outlook with your work email</p>
-
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h3>Open Outlook and Add Account</h3>
-                        <p>Enter your email: <code>yourname@harmonybrands.com</code></p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h3>Complete Sign-In</h3>
-                        <p>Enter your password and complete MFA. Install Company Portal or Authenticator if prompted.</p>
-                    </div>
-                </div>
-
-                <div class="alert alert-success" style="margin-top: 1rem; margin-bottom: 0;">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                    </svg>
-                    <div><strong>You're all set!</strong> Your email will begin syncing shortly.</div>
                 </div>
             </div>
         </section>
@@ -1449,6 +1570,20 @@
                 document.getElementById(tabId).classList.add('active');
                 
                 window.scrollTo({ top: 150, behavior: 'smooth' });
+            });
+        });
+
+        // App choice buttons (iPhone Outlook vs Native Mail)
+        document.querySelectorAll('.app-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update button states
+                document.querySelectorAll('.app-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Show corresponding instructions
+                const targetId = btn.dataset.target;
+                document.querySelectorAll('.app-instructions').forEach(inst => inst.classList.remove('active'));
+                document.getElementById(targetId).classList.add('active');
             });
         });
 
